@@ -18,6 +18,15 @@ public class Balance implements Serializable {
     private Integer id;
     private BigDecimal amount;
 
+    public Balance() {
+
+    }
+
+    public Balance(Integer id, BigDecimal amount) {
+        this.id = id;
+        this.amount = amount;
+    }
+
     public Integer getId() {
         return id;
     }

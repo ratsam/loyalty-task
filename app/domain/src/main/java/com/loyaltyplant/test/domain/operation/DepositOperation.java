@@ -40,7 +40,7 @@ public class DepositOperation implements BalanceOperation {
     }
 
     private void doApply(Balance balance) {
-        final BigDecimal newAmount = balance.getAmount().subtract(getAmount());
+        final BigDecimal newAmount = balance.getAmount().add(getAmount());
         balance.setAmount(newAmount);
     }
 
