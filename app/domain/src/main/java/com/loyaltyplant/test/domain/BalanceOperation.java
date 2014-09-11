@@ -1,5 +1,7 @@
 package com.loyaltyplant.test.domain;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Maksim Zakharov
  * @since 1.0
@@ -11,5 +13,5 @@ public interface BalanceOperation {
      *
      * @param balance Balance to perform operation on
      */
-    void apply(Balance balance);
+    void apply(@Nonnull Balance balance);
 }
