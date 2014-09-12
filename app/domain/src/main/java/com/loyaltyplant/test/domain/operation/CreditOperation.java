@@ -10,22 +10,22 @@ import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 
 /**
- * Deposit Operation.
- * Perform account replenishment for given amount.
+ * Credit Operation.
+ * Perform balance replenishment for given amount.
  * Amount must have non-negative value.
  *
  * @author Maksim Zakharov
  * @since 1.0
  */
-public class DepositOperation implements BalanceOperation {
+public class CreditOperation implements BalanceOperation {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DepositOperation.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CreditOperation.class);
 
     private final BigDecimal amount;
 
-    public DepositOperation(@Nonnegative BigDecimal amount) {
+    public CreditOperation(@Nonnegative BigDecimal amount) {
         if (amount.compareTo(new BigDecimal("0")) < 0) {
-            throw new IllegalArgumentException("Can't deposit negative amount");
+            throw new IllegalArgumentException("Can't credit negative amount");
         }
 
         this.amount = amount;
@@ -34,7 +34,7 @@ public class DepositOperation implements BalanceOperation {
     @Override
     public void apply(@Nonnull Balance balance) {
         if (LOG.isInfoEnabled()) {
-            LOG.info("Applying deposit of {} for Balance #{}", getAmount(), balance.getId());
+            LOG.info("Applying credit of {} for Balance #{}", getAmount(), balance.getId());
         }
         doApply(balance);
     }
