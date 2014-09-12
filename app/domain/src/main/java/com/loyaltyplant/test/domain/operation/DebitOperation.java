@@ -10,23 +10,23 @@ import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 
 /**
- * Credit Operation.
- * Perform balance replenishment for given amount.
- * Amount must have non-negative value. Use {@link com.loyaltyplant.test.domain.operation.DebitOperation}
- * if you want to decrease balance.
+ * Debit Operation.
+ * Decrease Balance for given amount.
+ * Amount must have non-negative value. Use {@link com.loyaltyplant.test.domain.operation.CreditOperation}
+ * if you want to increase balance.
  *
  * @author Maksim Zakharov
  * @since 1.0
  */
-public class CreditOperation implements BalanceOperation {
+public class DebitOperation implements BalanceOperation {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CreditOperation.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DebitOperation.class);
 
     private final BigDecimal amount;
 
-    public CreditOperation(@Nonnegative BigDecimal amount) {
+    public DebitOperation(@Nonnegative BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Can't credit negative amount");
+            throw new IllegalArgumentException("Can't debit negative amount");
         }
 
         this.amount = amount;
@@ -35,13 +35,13 @@ public class CreditOperation implements BalanceOperation {
     @Override
     public void apply(@Nonnull Balance balance) {
         if (LOG.isInfoEnabled()) {
-            LOG.info("Applying credit of {} for Balance #{}", getAmount(), balance.getId());
+            LOG.info("Applying debit of {} for Balance #{}", getAmount(), balance.getId());
         }
         doApply(balance);
     }
 
     private void doApply(Balance balance) {
-        final BigDecimal newAmount = balance.getAmount().add(getAmount());
+        final BigDecimal newAmount = balance.getAmount().subtract(getAmount());
         balance.setAmount(newAmount);
     }
 
