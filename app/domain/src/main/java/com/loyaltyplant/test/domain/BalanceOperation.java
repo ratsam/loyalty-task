@@ -14,4 +14,12 @@ public interface BalanceOperation {
      * @param balance Balance to perform operation on
      */
     void apply(@Nonnull Balance balance);
+
+    /**
+     * Check if Operation can be performed on the given Balance.
+     *
+     * @param balance Balance to check against
+     * @return true if operation can be performed otherwise false
+     */
+    boolean isApplicableTo(@Nonnull Balance balance);
 }

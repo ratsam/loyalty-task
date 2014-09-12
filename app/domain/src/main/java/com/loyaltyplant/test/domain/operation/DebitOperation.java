@@ -45,6 +45,17 @@ public class DebitOperation implements BalanceOperation {
         balance.setAmount(newAmount);
     }
 
+    /**
+     * Check if Balance value is greater then or equals Debit amount.
+     *
+     * @param balance Balance to check against
+     * @return true if Balance has sufficient value
+     */
+    @Override
+    public boolean isApplicableTo(@Nonnull Balance balance) {
+        return balance.getAmount().compareTo(getAmount()) >= 0;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }

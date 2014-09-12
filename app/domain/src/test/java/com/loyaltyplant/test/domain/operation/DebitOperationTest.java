@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Maksim Zakharov
@@ -45,5 +45,21 @@ public class DebitOperationTest {
         new DebitOperation(new BigDecimal("21.5")).apply(balance);
 
         assertEquals(new BigDecimal("20.5"), balance.getAmount());
+    }
+
+    @Test
+    public void testIsApplicableToSufficientBalance() {
+        final Balance balance = new Balance(1, new BigDecimal("10.0"));
+        final DebitOperation operation = new DebitOperation(new BigDecimal("10.01"));
+
+        assertFalse("Debit Operation can't be performed on Balance with insufficient amount", operation.isApplicableTo(balance));
+    }
+
+    @Test
+    public void testIsApplicableToInsufficientBalance() {
+        final Balance balance = new Balance(1, new BigDecimal("10.01"));
+        final DebitOperation operation = new DebitOperation(new BigDecimal("10.00"));
+
+        assertTrue("Debit Operation can be performed on Balance with sufficient amount", operation.isApplicableTo(balance));
     }
 }

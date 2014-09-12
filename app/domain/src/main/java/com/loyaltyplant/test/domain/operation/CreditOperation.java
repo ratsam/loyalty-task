@@ -45,6 +45,17 @@ public class CreditOperation implements BalanceOperation {
         balance.setAmount(newAmount);
     }
 
+    /**
+     * Credit operation can be performed to any Balance.
+     *
+     * @param balance Balance to check against
+     * @return true
+     */
+    @Override
+    public boolean isApplicableTo(@Nonnull Balance balance) {
+        return true;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
