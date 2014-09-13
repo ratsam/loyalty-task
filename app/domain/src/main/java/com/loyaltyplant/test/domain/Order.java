@@ -1,5 +1,13 @@
 package com.loyaltyplant.test.domain;
 
+import com.loyaltyplant.test.domain.operation.AbstractOperation;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -8,13 +16,21 @@ import java.io.Serializable;
  * @author Maksim Zakharov
  * @since 1.0
  */
-public class Order implements Serializable {
+@Entity
+@Table(name = "loyalty_order")
+public class Order<T extends AbstractOperation> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue
     private Integer id;
+
+    @ManyToOne
     private Balance balance;
-    private BalanceOperation operation;
+
+    @OneToOne(targetEntity = AbstractOperation.class)
+    private T operation;
 
     public boolean isValid() {
         return operation.isApplicableTo(balance);
@@ -36,11 +52,11 @@ public class Order implements Serializable {
         this.balance = balance;
     }
 
-    public BalanceOperation getOperation() {
+    public T getOperation() {
         return operation;
     }
 
-    public void setOperation(BalanceOperation operation) {
+    public void setOperation(T operation) {
         this.operation = operation;
     }
 }

@@ -2,6 +2,12 @@ package com.loyaltyplant.test.domain;
 
 import org.joda.time.DateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -11,13 +17,23 @@ import java.util.Collection;
  * @author Maksim Zakharov
  * @since 1.0
  */
+@Entity
+@Table(name = "loyalty_transaction")
 public class Transaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue
     private Integer id;
+
+    @Column
     private DateTime time;
+
+    @OneToMany
     private Collection<Order> orders;
+
+    @Column
     private String description;
 
     public Integer getId() {

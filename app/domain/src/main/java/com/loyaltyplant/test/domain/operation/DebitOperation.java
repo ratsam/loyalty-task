@@ -1,12 +1,14 @@
 package com.loyaltyplant.test.domain.operation;
 
 import com.loyaltyplant.test.domain.Balance;
-import com.loyaltyplant.test.domain.BalanceOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
@@ -18,11 +20,14 @@ import java.math.BigDecimal;
  * @author Maksim Zakharov
  * @since 1.0
  */
-public class DebitOperation implements BalanceOperation {
+@Entity
+@DiscriminatorValue("debit")
+public class DebitOperation extends AbstractOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(DebitOperation.class);
 
-    private final BigDecimal amount;
+    @Column(name = "amount", precision = 16, scale = 8, nullable = false, updatable = false)
+    private BigDecimal amount;
 
     public DebitOperation(@Nonnegative BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
