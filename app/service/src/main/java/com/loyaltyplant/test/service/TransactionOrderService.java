@@ -12,5 +12,13 @@ import java.util.Collection;
  */
 public interface TransactionOrderService {
 
+    /**
+     * Perform transaction.
+     *
+     * @param orders non-empty collection of orders
+     * @param description optional description
+     * @return performed transaction
+     * @throws java.lang.IllegalArgumentException if {@code orders} is empty.
+     */
     Transaction performTransaction(Collection<Order> orders, @Nullable String description);
 }

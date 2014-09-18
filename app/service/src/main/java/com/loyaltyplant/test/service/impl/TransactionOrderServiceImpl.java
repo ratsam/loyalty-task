@@ -29,6 +29,13 @@ public class TransactionOrderServiceImpl implements TransactionOrderService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Transaction performTransaction(Collection<Order> orders, String description) {
+        if (orders.isEmpty()) {
+            throw new IllegalArgumentException("Can't perform transaction with no orders");
+        }
+        return doPerformTransaction(orders, description);
+    }
+
+    private Transaction doPerformTransaction(Collection<Order> orders, String description) {
         final Transaction transaction = new Transaction();
         transaction.setTime(DateTime.now());
         transaction.setOrders(new ArrayList<Order>(orders));
