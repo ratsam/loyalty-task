@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @since 1.0
  */
 @Entity
-@Table(name = "loyalty_order")
+@Table(name = "loyalty_operation")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "operation_type")
 public abstract class AbstractOperation implements BalanceOperation {
