@@ -14,5 +14,8 @@ public interface TransactionRepository {
     @Modifying
     <T extends Transaction> T save(T transaction);
 
+    @Modifying
+    <T extends Transaction> T saveAndFlush(T transaction);
+
     Transaction findById(Integer id);
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <balance id="1" amount="10.00" version="2"/>
+
+    <loyalty_transaction id="1"/>
+    <loyalty_operation id="1" amount="10.0" operation_type="credit"/>
+    <loyalty_order id="1" balance_id="1" operation_id="1"/>
+
+</dataset>

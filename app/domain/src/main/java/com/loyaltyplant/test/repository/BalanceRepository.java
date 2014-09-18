@@ -14,5 +14,8 @@ public interface BalanceRepository {
     @Modifying
     <T extends Balance> T save(T balance);
 
+    @Modifying
+    <T extends Balance> Iterable<T> save(Iterable<T> entities);
+
     Balance findById(Integer id);
 }
