@@ -8,6 +8,9 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**
+ * Low-level Transaction service.
+ * You'll probably don't need it. Instead take a look at {@link TransactionFacade} — a more high-level abstraction.
+ *
  * @author Maksim Zakharov
  * @since 1.0
  */
