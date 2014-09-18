@@ -17,10 +17,18 @@
             <artifactId>joda-time</artifactId>
         </dependency>
 
+        <!--
+            Usually you would like to separate Domain and Entities declarations.
+            But for tiny application it seems to be overdesigned.
+        -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
         </dependency>
 
         <dependency>
