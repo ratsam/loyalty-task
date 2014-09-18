@@ -2,6 +2,7 @@ package com.loyaltyplant.test.domain;
 
 import com.loyaltyplant.test.domain.operation.AbstractOperation;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,14 +27,18 @@ public class Order<T extends AbstractOperation> implements Serializable {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Balance balance;
 
-    @OneToOne(targetEntity = AbstractOperation.class)
+    @OneToOne(targetEntity = AbstractOperation.class, cascade = CascadeType.PERSIST)
     private T operation;
 
     public boolean isValid() {
         return operation.isApplicableTo(balance);
+    }
+
+    public void apply() {
+        operation.apply(getBalance());
     }
 
     public Integer getId() {

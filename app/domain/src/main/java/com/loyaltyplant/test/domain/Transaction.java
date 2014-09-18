@@ -1,7 +1,9 @@
 package com.loyaltyplant.test.domain;
 
+import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import org.joda.time.DateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,11 +29,11 @@ public class Transaction implements Serializable {
     @GeneratedValue
     private Integer id;
 
-    @Column
+    @Column(nullable = false)
     private DateTime time;
 
-    @OneToMany
-    private Collection<Order> orders;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Collection<Order<? extends AbstractOperation>> orders;
 
     @Column
     private String description;
@@ -52,11 +54,11 @@ public class Transaction implements Serializable {
         this.time = time;
     }
 
-    public Collection<Order> getOrders() {
+    public Collection<Order<? extends AbstractOperation>> getOrders() {
         return orders;
     }
 
-    public void setOrders(Collection<Order> orders) {
+    public void setOrders(Collection<Order<? extends AbstractOperation>> orders) {
         this.orders = orders;
     }
 
