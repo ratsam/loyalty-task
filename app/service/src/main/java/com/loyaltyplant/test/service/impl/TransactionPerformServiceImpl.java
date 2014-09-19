@@ -7,7 +7,7 @@ import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import com.loyaltyplant.test.repository.BalanceRepository;
 import com.loyaltyplant.test.repository.TransactionRepository;
 import com.loyaltyplant.test.service.OrderProcessingException;
-import com.loyaltyplant.test.service.TransactionOrderService;
+import com.loyaltyplant.test.service.TransactionPerformService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +24,9 @@ import java.util.Collection;
  * @since 1.0
  */
 @Service("transactionOrderService")
-public class TransactionOrderServiceImpl implements TransactionOrderService {
+public class TransactionPerformServiceImpl implements TransactionPerformService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TransactionOrderServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TransactionPerformServiceImpl.class);
 
     private BalanceRepository balanceRepository;
     private TransactionRepository transactionRepository;

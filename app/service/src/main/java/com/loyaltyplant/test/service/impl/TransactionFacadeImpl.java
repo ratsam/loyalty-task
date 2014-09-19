@@ -5,7 +5,7 @@ import com.loyaltyplant.test.domain.Order;
 import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import com.loyaltyplant.test.repository.BalanceRepository;
 import com.loyaltyplant.test.service.TransactionFacade;
-import com.loyaltyplant.test.service.TransactionOrderService;
+import com.loyaltyplant.test.service.TransactionPerformService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class TransactionFacadeImpl implements TransactionFacade {
     private static final Logger LOG = LoggerFactory.getLogger(TransactionFacadeImpl.class);
 
     private BalanceRepository balanceRepository;
-    private TransactionOrderService transactionOrderService;
+    private TransactionPerformService transactionPerformService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -51,7 +51,7 @@ public class TransactionFacadeImpl implements TransactionFacade {
     public BigDecimal applyOperation(Integer balanceId, AbstractOperation operation) {
         final Balance balance = balanceRepository.findById(balanceId);
         final Order<AbstractOperation> order = new Order<>(balance, operation);
-        transactionOrderService.performTransaction(Collections.<Order<? extends AbstractOperation>>singleton(order), null);
+        transactionPerformService.performTransaction(Collections.<Order<? extends AbstractOperation>>singleton(order), null);
         LOG.info("Updated balance #{}, new amount={} @version={}", balance.getId(), balance.getAmount(), balance.getVersion());
         return balance.getAmount();
     }
@@ -62,7 +62,7 @@ public class TransactionFacadeImpl implements TransactionFacade {
     }
 
     @Autowired
-    public void setTransactionOrderService(TransactionOrderService transactionOrderService) {
-        this.transactionOrderService = transactionOrderService;
+    public void setTransactionPerformService(TransactionPerformService transactionPerformService) {
+        this.transactionPerformService = transactionPerformService;
     }
 }

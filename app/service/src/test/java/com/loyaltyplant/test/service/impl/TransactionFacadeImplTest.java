@@ -5,7 +5,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.loyaltyplant.test.domain.Balance;
 import com.loyaltyplant.test.domain.operation.DebitOperation;
 import com.loyaltyplant.test.service.TransactionFacade;
-import com.loyaltyplant.test.service.TransactionOrderService;
+import com.loyaltyplant.test.service.TransactionPerformService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowire;
@@ -105,8 +105,8 @@ public class TransactionFacadeImplTest {
     public static class Config {
 
         @Bean(autowire = Autowire.BY_TYPE)
-        public TransactionOrderService transactionOrderService() {
-            return new TransactionOrderServiceImpl();
+        public TransactionPerformService transactionPerformService() {
+            return new TransactionPerformServiceImpl();
         }
 
         @Bean(autowire = Autowire.BY_TYPE)

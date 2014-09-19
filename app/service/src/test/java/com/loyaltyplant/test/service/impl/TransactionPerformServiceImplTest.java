@@ -9,7 +9,7 @@ import com.loyaltyplant.test.domain.Order;
 import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import com.loyaltyplant.test.domain.operation.CreditOperation;
 import com.loyaltyplant.test.repository.BalanceRepository;
-import com.loyaltyplant.test.service.TransactionOrderService;
+import com.loyaltyplant.test.service.TransactionPerformService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowire;
@@ -34,31 +34,31 @@ import java.util.Collections;
  * @since 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TransactionOrderServiceImplTest.Config.class)
+@SpringApplicationConfiguration(classes = TransactionPerformServiceImplTest.Config.class)
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         DbUnitTestExecutionListener.class
 })
 @Transactional
-public class TransactionOrderServiceImplTest {
+public class TransactionPerformServiceImplTest {
 
     @Autowired
     private BalanceRepository balanceRepository;
 
     @Autowired
-    private TransactionOrderService transactionOrderService;
+    private TransactionPerformService transactionPerformService;
 
     @Test(expected = IllegalArgumentException.class)
     public void testPerformEmptyTransaction() {
-        transactionOrderService.performTransaction(Collections.<Order<? extends AbstractOperation>>emptyList(), null);
+        transactionPerformService.performTransaction(Collections.<Order<? extends AbstractOperation>>emptyList(), null);
     }
 
     @Test
     @DatabaseSetup("balances-before.xml")
     @ExpectedDatabase(value = "balances-after-simple-transaction.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void testPerformTransaction() {
-        transactionOrderService.performTransaction(Collections.<Order<? extends AbstractOperation>>singleton(prepareSimpleOrder()), null);
+        transactionPerformService.performTransaction(Collections.<Order<? extends AbstractOperation>>singleton(prepareSimpleOrder()), null);
     }
 
     private Order<CreditOperation> prepareSimpleOrder() {
@@ -77,8 +77,8 @@ public class TransactionOrderServiceImplTest {
     public static class Config {
 
         @Bean(autowire = Autowire.BY_TYPE)
-        public TransactionOrderService transactionOrderService() {
-            return new TransactionOrderServiceImpl();
+        public TransactionPerformService transactionPerformService() {
+            return new TransactionPerformServiceImpl();
         }
     }
 }

@@ -14,7 +14,7 @@ import java.util.Collection;
  * @author Maksim Zakharov
  * @since 1.0
  */
-public interface TransactionOrderService {
+public interface TransactionPerformService {
 
     /**
      * Perform transaction.
