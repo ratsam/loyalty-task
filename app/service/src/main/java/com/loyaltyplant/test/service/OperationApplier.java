@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author Maksim Zakharov
  * @since 1.0
  */
-public interface TransactionFacade {
+public interface OperationApplier {
 
     /**
      * Transfer funds from one Balance to another.

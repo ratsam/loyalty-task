@@ -9,7 +9,7 @@ import java.util.Collection;
 
 /**
  * Low-level Transaction service.
- * You'll probably don't need it. Instead take a look at {@link TransactionFacade} — a more high-level abstraction.
+ * Apply collection of Orders within single Transaction.
  *
  * @author Maksim Zakharov
  * @since 1.0

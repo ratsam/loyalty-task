@@ -4,7 +4,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.loyaltyplant.test.domain.Balance;
 import com.loyaltyplant.test.domain.operation.DebitOperation;
-import com.loyaltyplant.test.service.TransactionFacade;
+import com.loyaltyplant.test.service.OperationApplier;
 import com.loyaltyplant.test.service.TransactionPerformService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,17 +40,17 @@ import java.util.concurrent.ForkJoinTask;
  * @since 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TransactionFacadeImplTest.Config.class)
+@SpringApplicationConfiguration(classes = OperationApplierImplTest.Config.class)
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         DbUnitTestExecutionListener.class
 })
 @Transactional
-public class TransactionFacadeImplTest {
+public class OperationApplierImplTest {
 
     @Autowired
-    private TransactionFacade transactionFacade;
+    private OperationApplier operationApplier;
 
     @Test(expected = ObjectOptimisticLockingFailureException.class, timeout = 3000L)
     @DatabaseSetup("balances-before.xml")
@@ -67,7 +67,7 @@ public class TransactionFacadeImplTest {
         return new Runnable() {
             @Override
             public void run() {
-                transactionFacade.applyOperation(2, new WaitingDebitOperation(new BigDecimal("7.0"), latch));
+                operationApplier.applyOperation(2, new WaitingDebitOperation(new BigDecimal("7.0"), latch));
             }
         };
     }
@@ -110,14 +110,14 @@ public class TransactionFacadeImplTest {
         }
 
         @Bean(autowire = Autowire.BY_TYPE)
-        public TransactionFacade transactionFacadeImpl() {
-            return new TransactionFacadeImpl();
+        public OperationApplier operationApplierImpl() {
+            return new OperationApplierImpl();
         }
 
         @Bean
         @Primary
-        public TransactionFacade transactionFacade() {
-            return new TransactionFacadeDecorator(transactionFacadeImpl());
+        public OperationApplier operationApplier() {
+            return new OperationApplierDecorator(operationApplierImpl());
         }
     }
 }

@@ -4,7 +4,7 @@ import com.loyaltyplant.test.domain.Balance;
 import com.loyaltyplant.test.domain.Order;
 import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import com.loyaltyplant.test.repository.BalanceRepository;
-import com.loyaltyplant.test.service.TransactionFacade;
+import com.loyaltyplant.test.service.OperationApplier;
 import com.loyaltyplant.test.service.TransactionPerformService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,9 @@ import java.util.Collections;
  * @since 1.0
  */
 @Service("transactionFacade")
-public class TransactionFacadeImpl implements TransactionFacade {
+public class OperationApplierImpl implements OperationApplier {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TransactionFacadeImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OperationApplierImpl.class);
 
     private BalanceRepository balanceRepository;
     private TransactionPerformService transactionPerformService;
