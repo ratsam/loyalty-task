@@ -57,4 +57,8 @@ public class Balance implements Serializable {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    public Integer getVersion() {
+        return version;
+    }
 }
