@@ -20,31 +20,13 @@ import java.util.Collections;
  * @author Maksim Zakharov
  * @since 1.0
  */
-@Service("transactionFacade")
+@Service("operationApplier")
 public class OperationApplierImpl implements OperationApplier {
 
     private static final Logger LOG = LoggerFactory.getLogger(OperationApplierImpl.class);
 
     private BalanceRepository balanceRepository;
     private TransactionPerformService transactionPerformService;
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void transfer(Integer fromBalance, Integer toBalance, BigDecimal amount) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public BigDecimal credit(Integer balanceId, BigDecimal amount) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public BigDecimal debit(Integer balanceId, BigDecimal amount) {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
