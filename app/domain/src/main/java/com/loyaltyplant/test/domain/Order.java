@@ -33,6 +33,15 @@ public class Order<T extends AbstractOperation> implements Serializable {
     @OneToOne(targetEntity = AbstractOperation.class, cascade = CascadeType.PERSIST)
     private T operation;
 
+    public Order() {
+
+    }
+
+    public Order(Balance balance, T operation) {
+        this.balance = balance;
+        this.operation = operation;
+    }
+
     public boolean isValid() {
         return operation.isApplicableTo(balance);
     }
