@@ -2,6 +2,7 @@
 <dataset>
 
     <balance id="1" amount="10.00" version="2"/>
+    <balance id="2" amount="100" version="1"/>
 
     <loyalty_transaction id="1"/>
     <loyalty_operation id="1" amount="10.0" operation_type="credit"/>
