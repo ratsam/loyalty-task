@@ -24,16 +24,14 @@ public interface BalanceTransferService {
      *
      * @param balanceId Balance id to credit
      * @param amount amount to credit
-     * @return new Balance value
      */
-    BigDecimal credit(Integer balanceId, BigDecimal amount);
+    void credit(Integer balanceId, BigDecimal amount);
 
     /**
      * Debit Balance with given amount.
      *
      * @param balanceId Balance id to debit
      * @param amount amount to debit
-     * @return new Balance value
      */
-    BigDecimal debit(Integer balanceId, BigDecimal amount);
+    void debit(Integer balanceId, BigDecimal amount);
 }

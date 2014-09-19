@@ -25,5 +25,5 @@ public interface TransactionPerformService {
      * @throws java.lang.IllegalArgumentException if {@code orders} is empty.
      * @throws com.loyaltyplant.test.service.OrderProcessingException if any Order is not valid and can't be processed
      */
-    Transaction performTransaction(Collection<Order<? extends AbstractOperation>> orders, @Nullable String description);
+    Transaction performTransaction(Collection<? extends Order<? extends AbstractOperation>> orders, @Nullable String description);
 }

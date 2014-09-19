@@ -2,10 +2,11 @@ package com.loyaltyplant.test.service.impl;
 
 import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import com.loyaltyplant.test.service.OperationApplier;
+import com.loyaltyplant.test.service.OperationApplyingInfo;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.util.Collection;
 
 /**
  * {@link com.loyaltyplant.test.service.OperationApplier} decorator that enforces starting new DB transaction.
@@ -23,7 +24,13 @@ public class OperationApplierDecorator implements OperationApplier {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public BigDecimal applyOperation(Integer balanceId, AbstractOperation operation) {
-        return target.applyOperation(balanceId, operation);
+    public void applyOperation(Integer balanceId, AbstractOperation operation) {
+        target.applyOperation(balanceId, operation);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    public void applyOperations(Collection<OperationApplyingInfo> operationApplyingInfos) {
+        target.applyOperations(operationApplyingInfos);
     }
 }

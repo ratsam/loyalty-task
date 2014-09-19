@@ -33,14 +33,14 @@ public class TransactionPerformServiceImpl implements TransactionPerformService 
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Transaction performTransaction(Collection<Order<? extends AbstractOperation>> orders, String description) {
+    public Transaction performTransaction(Collection<? extends Order<? extends AbstractOperation>> orders, String description) {
         if (orders.isEmpty()) {
             throw new IllegalArgumentException("Can't perform transaction with no orders");
         }
         return doPerformTransaction(orders, description);
     }
 
-    private Transaction doPerformTransaction(Collection<Order<? extends AbstractOperation>> orders, String description) {
+    private Transaction doPerformTransaction(Collection<? extends Order<? extends AbstractOperation>> orders, String description) {
         final Transaction transaction = new Transaction();
         transaction.setTime(DateTime.now());
         applyOrders(orders);
@@ -54,7 +54,7 @@ public class TransactionPerformServiceImpl implements TransactionPerformService 
         return persistedTransaction;
     }
 
-    private void applyOrders(Collection<Order<? extends AbstractOperation>> orders) {
+    private void applyOrders(Collection<? extends Order<? extends AbstractOperation>> orders) {
         final Collection<Balance> updatedBalances = new ArrayList<>(orders.size());
 
         for (Order order : orders) {
