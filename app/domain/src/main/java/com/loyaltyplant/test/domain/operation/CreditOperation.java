@@ -29,6 +29,10 @@ public class CreditOperation extends AbstractOperation {
     @Column(name = "amount", precision = 16, scale = 8, nullable = false, updatable = false)
     private BigDecimal amount;
 
+    public CreditOperation() {
+
+    }
+
     public CreditOperation(@Nonnegative BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Can't credit negative amount");
