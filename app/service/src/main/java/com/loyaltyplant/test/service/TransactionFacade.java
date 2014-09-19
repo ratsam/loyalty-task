@@ -1,6 +1,6 @@
 package com.loyaltyplant.test.service;
 
-import com.loyaltyplant.test.domain.BalanceOperation;
+import com.loyaltyplant.test.domain.operation.AbstractOperation;
 
 import java.math.BigDecimal;
 
@@ -48,5 +48,5 @@ public interface TransactionFacade {
      * @param operation Operation to apply
      * @return new Balance value
      */
-    BigDecimal applyOperation(Integer balanceId, BalanceOperation operation);
+    BigDecimal applyOperation(Integer balanceId, AbstractOperation operation);
 }
