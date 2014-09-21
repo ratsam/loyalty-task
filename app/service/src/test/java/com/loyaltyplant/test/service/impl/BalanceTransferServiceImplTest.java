@@ -1,5 +1,6 @@
 package com.loyaltyplant.test.service.impl;
 
+import com.loyaltyplant.test.domain.operation.AbstractOperation;
 import com.loyaltyplant.test.domain.operation.DebitOperation;
 import com.loyaltyplant.test.service.BalanceTransferService;
 import com.loyaltyplant.test.service.OperationApplier;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
@@ -43,6 +46,19 @@ public class BalanceTransferServiceImplTest {
         verifyNoMoreInteractions(operationApplierMock);
     }
 
+    @Test
+    public void testDebitRetry() {
+        // Throw an exception at first call, then do nothing.
+        doThrow(ObjectOptimisticLockingFailureException.class).doNothing()
+                .when(operationApplierMock).applyOperation(any(Integer.class), any(AbstractOperation.class));
+
+        balanceTransferService.debit(1, new BigDecimal("10"));
+
+        verify(operationApplierMock, times(2)).applyOperation(eq(Integer.valueOf(1)), eq(new DebitOperation(new BigDecimal("10.00"))));
+        verifyNoMoreInteractions(operationApplierMock);
+    }
+
+    @EnableRetry
     public static class Config {
 
         @Bean
