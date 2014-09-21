@@ -1,6 +1,7 @@
 package com.loyaltyplant.test.domain.operation;
 
 import com.loyaltyplant.test.domain.Balance;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,30 @@ public class DebitOperation extends AbstractOperation {
     }
 
     @Override
+    public void apply(@Nonnull Balance balance) {
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Applying debit of {} for Balance #{}", getAmount(), balance.getId());
+        }
+        doApply(balance);
+    }
+
+    private void doApply(Balance balance) {
+        final BigDecimal newAmount = balance.getAmount().subtract(getAmount());
+        balance.setAmount(newAmount);
+    }
+
+    /**
+     * Check if Balance value is greater then or equals Debit amount.
+     *
+     * @param balance Balance to check against
+     * @return true if Balance has sufficient value
+     */
+    @Override
+    public boolean isApplicableTo(@Nonnull Balance balance) {
+        return balance.getAmount().compareTo(getAmount()) >= 0;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -64,27 +89,10 @@ public class DebitOperation extends AbstractOperation {
     }
 
     @Override
-    public void apply(@Nonnull Balance balance) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Applying debit of {} for Balance #{}", getAmount(), balance.getId());
-        }
-        doApply(balance);
-    }
-
-    private void doApply(Balance balance) {
-        final BigDecimal newAmount = balance.getAmount().subtract(getAmount());
-        balance.setAmount(newAmount);
-    }
-
-    /**
-     * Check if Balance value is greater then or equals Debit amount.
-     *
-     * @param balance Balance to check against
-     * @return true if Balance has sufficient value
-     */
-    @Override
-    public boolean isApplicableTo(@Nonnull Balance balance) {
-        return balance.getAmount().compareTo(getAmount()) >= 0;
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(getAmount())
+                .build();
     }
 
     public BigDecimal getAmount() {

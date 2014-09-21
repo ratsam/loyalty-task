@@ -1,6 +1,7 @@
 package com.loyaltyplant.test.domain.operation;
 
 import com.loyaltyplant.test.domain.Balance;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,6 +90,13 @@ public class CreditOperation extends AbstractOperation {
     @Override
     public int hashCode() {
         return getAmount().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(getAmount())
+                .build();
     }
 
     public BigDecimal getAmount() {
