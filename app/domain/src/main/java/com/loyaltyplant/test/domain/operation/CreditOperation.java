@@ -65,6 +65,32 @@ public class CreditOperation extends AbstractOperation {
         return true;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        // Hibernate doesn't allow us to check classes for equality.
+        if (!(obj instanceof CreditOperation)) {
+            return false;
+        } else {
+            return isEquals((CreditOperation) obj);
+        }
+    }
+
+    public boolean isEquals(@Nonnull CreditOperation other) {
+        // EqualsBuilder uses 'equals' method to compare BigDecimals, which is not always correct.
+        return other.getAmount().compareTo(getAmount()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return getAmount().hashCode();
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }

@@ -31,4 +31,11 @@ public abstract class AbstractOperation implements BalanceOperation {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    // Force subclasses to implement equals & hashCode.
+    @Override
+    public abstract boolean equals(Object obj);
+
+    @Override
+    public abstract int hashCode();
 }

@@ -54,6 +54,7 @@ public class DebitOperation extends AbstractOperation {
     }
 
     public boolean isEquals(@Nonnull DebitOperation other) {
+        // EqualsBuilder uses 'equals' method to compare BigDecimals, which is not always correct.
         return other.getAmount().compareTo(getAmount()) == 0;
     }
 
