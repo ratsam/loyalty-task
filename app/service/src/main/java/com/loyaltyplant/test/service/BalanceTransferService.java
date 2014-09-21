@@ -15,6 +15,7 @@ import java.math.BigDecimal;
  * @author Maksim Zakharov
  * @since 1.0
  */
+@Retryable(include = OptimisticLockingFailureException.class, maxAttempts = 1000)
 public interface BalanceTransferService {
 
     /**
@@ -26,7 +27,6 @@ public interface BalanceTransferService {
      * @param toBalance Balance id to credit
      * @param amount amount to transfer
      */
-    @Retryable(include = OptimisticLockingFailureException.class, maxAttempts = 1000)
     void transfer(Integer fromBalance, Integer toBalance, BigDecimal amount);
 
     /**
@@ -35,7 +35,6 @@ public interface BalanceTransferService {
      * @param balanceId Balance id to credit
      * @param amount amount to credit
      */
-    @Retryable(include = OptimisticLockingFailureException.class, maxAttempts = 1000)
     void credit(Integer balanceId, BigDecimal amount);
 
     /**
@@ -44,6 +43,5 @@ public interface BalanceTransferService {
      * @param balanceId Balance id to debit
      * @param amount amount to debit
      */
-    @Retryable(include = OptimisticLockingFailureException.class, maxAttempts = 1000)
     void debit(Integer balanceId, BigDecimal amount);
 }
