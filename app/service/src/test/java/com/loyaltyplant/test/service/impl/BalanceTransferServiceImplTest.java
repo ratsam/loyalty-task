@@ -1,6 +1,6 @@
 package com.loyaltyplant.test.service.impl;
 
-import com.loyaltyplant.test.domain.operation.AbstractOperation;
+import com.loyaltyplant.test.domain.operation.DebitOperation;
 import com.loyaltyplant.test.service.BalanceTransferService;
 import com.loyaltyplant.test.service.OperationApplier;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class BalanceTransferServiceImplTest {
     public void testDebitSuccess() {
         balanceTransferService.debit(1, new BigDecimal("10"));
 
-        verify(operationApplierMock).applyOperation(eq(Integer.valueOf(1)), any(AbstractOperation.class));
+        verify(operationApplierMock).applyOperation(eq(Integer.valueOf(1)), eq(new DebitOperation(new BigDecimal("10.00"))));
         verifyNoMoreInteractions(operationApplierMock);
     }
 

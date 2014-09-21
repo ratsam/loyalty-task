@@ -38,6 +38,31 @@ public class DebitOperation extends AbstractOperation {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        // Hibernate doesn't allow us to check classes for equality.
+        if (!(obj instanceof DebitOperation)) {
+            return false;
+        } else {
+            return isEquals((DebitOperation) obj);
+        }
+    }
+
+    public boolean isEquals(@Nonnull DebitOperation other) {
+        return other.getAmount().compareTo(getAmount()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return getAmount().hashCode();
+    }
+
+    @Override
     public void apply(@Nonnull Balance balance) {
         if (LOG.isInfoEnabled()) {
             LOG.info("Applying debit of {} for Balance #{}", getAmount(), balance.getId());
