@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  */
 @Controller
 @RequestMapping("/api/balance")
-public class BalanceController {
+public class BalanceApiController {
 
     @Autowired
     private BalanceService balanceService;

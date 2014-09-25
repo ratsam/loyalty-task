@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = BalanceControllerTest.Config.class)
+@SpringApplicationConfiguration(classes = BalanceApiControllerTest.Config.class)
 @WebAppConfiguration
-public class BalanceControllerTest {
+public class BalanceApiControllerTest {
 
     private MockMvc mockMvc;
 
