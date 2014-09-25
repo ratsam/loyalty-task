@@ -1,6 +1,9 @@
 package com.loyaltyplant.test.repository;
 
 import com.loyaltyplant.test.domain.Balance;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.RepositoryDefinition;
 
@@ -18,4 +21,6 @@ public interface BalanceRepository {
     <T extends Balance> Iterable<T> save(Iterable<T> entities);
 
     Balance findById(Integer id);
+
+    Page<Balance> findAll(Pageable pageRequest);
 }
