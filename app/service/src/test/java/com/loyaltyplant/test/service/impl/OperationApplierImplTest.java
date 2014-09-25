@@ -2,6 +2,7 @@ package com.loyaltyplant.test.service.impl;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.loyaltyplant.test.domain.Balance;
 import com.loyaltyplant.test.domain.operation.DebitOperation;
 import com.loyaltyplant.test.service.OperationApplier;
@@ -54,6 +55,7 @@ public class OperationApplierImplTest {
 
     @Test(expected = ObjectOptimisticLockingFailureException.class, timeout = 3000L)
     @DatabaseSetup("balances-before.xml")
+    @DatabaseTearDown("cleanup.xml")
     public void testOptimisticLockingFailure() {
         final CountDownLatch latch = new CountDownLatch(2);
 
