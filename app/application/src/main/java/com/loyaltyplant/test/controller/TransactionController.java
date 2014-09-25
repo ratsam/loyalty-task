@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Maksim Zakharov
@@ -21,6 +22,7 @@ public class TransactionController {
     private BalanceTransferService balanceTransferService;
 
     @RequestMapping(value = "/debit", method = RequestMethod.POST)
+    @ResponseBody
     public DebitResult debit(@Validated DebitCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return badDebitRequest(command, bindingResult);
@@ -62,6 +64,7 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/credit", method = RequestMethod.POST)
+    @ResponseBody
     public CreditResult credit(@Validated CreditCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return badCreditRequest(command, bindingResult);
@@ -103,6 +106,7 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/transfer", method = RequestMethod.POST)
+    @ResponseBody
     public TransferResult transfer(@Validated TransferCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return badTransferRequest(command, bindingResult);
