@@ -1,7 +1,7 @@
 package com.loyaltyplant.test.controller;
 
 import com.loyaltyplant.test.domain.Balance;
-import com.loyaltyplant.test.repository.BalanceRepository;
+import com.loyaltyplant.test.service.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class BalanceController {
 
     @Autowired
-    private BalanceRepository balanceRepository;
+    private BalanceService balanceService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
@@ -30,16 +30,17 @@ public class BalanceController {
         return getBalances(new PageRequest(0, 20));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET, params = "page")
     @ResponseBody
     public Page<Balance> getBalances(PageRequest pageRequest) {
-        return balanceRepository.findAll(pageRequest);
+        return balanceService.findAll(pageRequest);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
+    @ResponseBody
     public Balance createBalance(@RequestParam("initialAmount") BigDecimal amount) {
         final Balance balance = new Balance();
         balance.setAmount(amount);
-        return balanceRepository.save(balance);
+        return balanceService.save(balance);
     }
 }
