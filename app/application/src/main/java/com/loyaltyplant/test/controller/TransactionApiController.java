@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/api/transaction")
-public class TransactionController {
+public class TransactionApiController {
 
     @Autowired
     private BalanceTransferService balanceTransferService;

@@ -32,14 +32,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TransactionControllerTest.Config.class)
+@SpringApplicationConfiguration(classes = TransactionApiControllerTest.Config.class)
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         DbUnitTestExecutionListener.class
 })
 @WebAppConfiguration
-public class TransactionControllerTest {
+public class TransactionApiControllerTest {
 
     private MockMvc mockMvc;
 
