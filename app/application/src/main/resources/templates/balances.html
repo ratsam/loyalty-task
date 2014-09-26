@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Test admin area</h1>
+    <ul class="nav nav-pills">
+      <li class="active"><a href="/balance/">Balances</a></li>
+      <li><a href="/transfer/">Transactions</a></li>
+    </ul>
+    <div class="row">
+      <div class="col-xs-12 col-md-4 pull-right">
+        <h4>Create Balance</h4>
+        <form class="form-inline" method="post" action="/balance/">
+          <div class="form-group">
+            <label class="sr-only" for="initialAmount">Initial amount</label>
+            <input type="number" class="form-control" id="initialAmount" name="initialAmount" value="0.00" min="0" step="0.01"/>
+          </div>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <h4>Existing Balances</h4>
+        <ul class="list-unstyled">
+          <li th:each="balanceInfo: ${balancesPage}">
+            <span class="balance-id" th:text="${balanceInfo.id}"></span>: <span class="balance-amount" th:text="${balanceInfo.amount}"></span>
+          </li>
+        </ul>
+        <div class="paging">
+          <a th:href="@{'/balance/?page=' + ${balancesPage.number - 1} + '&amp;size=' + ${balancesPage.size}}" th:if="${!balancesPage.firstPage}">prev</a>
+          <span th:text="${balancesPage.number}"></span>
+          <a th:href="@{'/balance/?page=' + ${balancesPage.number + 1} + '&amp;size=' + ${balancesPage.size}}" th:if="${!balancesPage.lastPage}">next</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
