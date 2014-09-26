@@ -1,6 +1,6 @@
 package com.loyaltyplant.test.controller;
 
-import javax.annotation.Nonnegative;
+import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -15,7 +15,7 @@ public class TransferCommand implements Serializable {
     private Integer from;
     private Integer to;
 
-    @Nonnegative
+    @DecimalMin("0.00")
     private BigDecimal amount;
 
     public Integer getFrom() {
