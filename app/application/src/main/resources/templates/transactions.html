@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Test admin area</h1>
+  <ul class="nav nav-pills">
+    <li><a href="/balance/">Balances</a></li>
+    <li class="active"><a href="/transfer/">Transactions</a></li>
+  </ul>
+  <div class="row">
+    <div class="col-xs-12 col-md-4">
+      <h4>Transfer</h4>
+      <form class="form" method="post" action="/transfer/transfer" th:object="${transferCommand}">
+        <div class="form-group">
+          <label for="transfer-from">From balance</label>
+          <input th:field="*{from}" type="number" class="form-control" id="transfer-from" name="from" required="required"/>
+          <span class="warning" th:if="${#fields.hasErrors('from')}" th:errors="*{from}">From error</span>
+        </div>
+        <div class="form-group">
+          <label for="transfer-to">To balance</label>
+          <input th:field="*{to}" type="number" class="form-control" id="transfer-to" name="to" required="required"/>
+          <span class="warning" th:if="${#fields.hasErrors('to')}" th:errors="*{to}">To error</span>
+        </div>
+        <div class="form-group">
+          <label for="transfer-amount">Amount</label>
+          <input th:field="*{amount}" type="number" class="form-control" id="transfer-amount" name="amount" value="0.00" min="0" step="0.01"/>
+          <span class="warning" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount error</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Transfer</button>
+      </form>
+    </div>
+
+    <div class="col-xs-12 col-md-4">
+      <h4>Credit</h4>
+      <form class="form" method="post" action="/transfer/credit" th:object="${creditCommand}">
+        <div class="form-group">
+          <label for="credit-to">To balance</label>
+          <input th:field="*{to}" type="number" class="form-control" id="credit-to" name="to" required="required"/>
+          <span class="warning" th:if="${#fields.hasErrors('to')}" th:errors="*{to}">To error</span>
+        </div>
+        <div class="form-group">
+          <label for="credit-amount">Amount</label>
+          <input th:field="*{amount}" type="number" class="form-control" id="credit-amount" name="amount" value="0.00" min="0" step="0.01"/>
+          <span class="warning" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount error</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Credit</button>
+      </form>
+    </div>
+
+    <div class="col-xs-12 col-md-4">
+      <h4>Debit</h4>
+      <form class="form" method="post" action="/transfer/debit" th:object="${debitCommand}">
+        <div class="form-group">
+          <label for="debit-from">From balance</label>
+          <input th:field="*{from}" type="number" class="form-control" id="debit-from" name="from" required="required"/>
+          <span class="warning" th:if="${#fields.hasErrors('from')}" th:errors="*{from}">From error</span>
+        </div>
+        <div class="form-group">
+          <label for="debit-amount">Amount</label>
+          <input th:field="*{amount}" type="number" class="form-control" id="debit-amount" name="amount" value="0.00" min="0" step="0.01"/>
+          <span class="warning" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount error</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Debit</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

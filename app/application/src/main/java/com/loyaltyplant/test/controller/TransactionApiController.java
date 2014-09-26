@@ -5,10 +5,11 @@ import com.loyaltyplant.test.service.OrderProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
 
 /**
  * @author Maksim Zakharov
@@ -23,7 +24,7 @@ public class TransactionApiController {
 
     @RequestMapping(value = "/debit", method = RequestMethod.POST)
     @ResponseBody
-    public DebitResult debit(@Validated DebitCommand command, BindingResult bindingResult) {
+    public DebitResult debit(@Valid DebitCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return badDebitRequest(command, bindingResult);
         } else {
@@ -65,7 +66,7 @@ public class TransactionApiController {
 
     @RequestMapping(value = "/credit", method = RequestMethod.POST)
     @ResponseBody
-    public CreditResult credit(@Validated CreditCommand command, BindingResult bindingResult) {
+    public CreditResult credit(@Valid CreditCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return badCreditRequest(command, bindingResult);
         } else {
@@ -107,7 +108,7 @@ public class TransactionApiController {
 
     @RequestMapping(value = "/transfer", method = RequestMethod.POST)
     @ResponseBody
-    public TransferResult transfer(@Validated TransferCommand command, BindingResult bindingResult) {
+    public TransferResult transfer(@Valid TransferCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return badTransferRequest(command, bindingResult);
         } else {
