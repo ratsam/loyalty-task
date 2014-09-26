@@ -5,6 +5,7 @@ import com.loyaltyplant.test.service.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +33,7 @@ public class BalanceApiController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET, params = "page")
     @ResponseBody
-    public Page<Balance> getBalances(PageRequest pageRequest) {
+    public Page<Balance> getBalances(Pageable pageRequest) {
         return balanceService.findAll(pageRequest);
     }
 
