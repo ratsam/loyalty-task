@@ -41,12 +41,11 @@ public class TransactionController {
         try {
             balanceTransferService.debit(debitCommand.getFrom(), debitCommand.getAmount());
         } catch (OrderProcessingException e) {
-            bindingResult.rejectValue("amount", "{loyalty.funds.insufficient}");
+            bindingResult.rejectValue("amount", "loyalty.funds.insufficient");
             return "transactions";
         }
 
-        model.addAttribute("message", "Debit succeed");
-        return "redirect:/transfer";
+        return "redirect:/transfer/";
     }
 
     @RequestMapping(value = "/credit", method = RequestMethod.POST)
@@ -62,12 +61,11 @@ public class TransactionController {
         try {
             balanceTransferService.credit(creditCommand.getTo(), creditCommand.getAmount());
         } catch (OrderProcessingException e) {
-            bindingResult.rejectValue("amount", "{loyalty.credit.failed}");
+            bindingResult.rejectValue("amount", "loyalty.credit.failed");
             return "transactions";
         }
 
-        model.addAttribute("message", "Credit succeed");
-        return "redirect:/transfer";
+        return "redirect:/transfer/";
     }
 
     @RequestMapping(value = "/transfer", method = RequestMethod.POST)
@@ -83,12 +81,11 @@ public class TransactionController {
         try {
             balanceTransferService.transfer(transferCommand.getFrom(), transferCommand.getTo(), transferCommand.getAmount());
         } catch (OrderProcessingException e) {
-            bindingResult.rejectValue("amount", "{loyalty.funds.insufficient}");
+            bindingResult.rejectValue("amount", "loyalty.funds.insufficient");
             return "transactions";
         }
 
-        model.addAttribute("message", "Transfer succeed");
-        return "redirect:/transfer";
+        return "redirect:/transfer/";
     }
 
     @ModelAttribute
