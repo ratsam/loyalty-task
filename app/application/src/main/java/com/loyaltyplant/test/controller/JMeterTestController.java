@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
@@ -36,21 +35,29 @@ public class JMeterTestController {
         // Create 1000 new Balances
         Integer startId = em.merge(new Balance(null, new BigDecimal("10.0"))).getId();
         for (int i = 0; i< 999; i++) {
-            em.merge(new Balance(i, new BigDecimal("10.0")));
+            em.persist(new Balance(null, new BigDecimal("10.0")));
         }
+
+        em.createQuery("update Balance set id = id - :diff")
+                .setParameter("diff", startId - 1)
+                .executeUpdate();
 
         return startId;
     }
 
     @RequestMapping("/validate")
     @ResponseBody
-    public void validate() {
-        @Nullable
+    public String validate() {
         BigDecimal credit = (BigDecimal) em.createQuery("select sum(o.amount) from CreditOperation o").getSingleResult();
-        @Nullable
         BigDecimal debit = (BigDecimal) em.createQuery("select sum(o.amount) from DebitOperation o").getSingleResult();
+        if (credit.compareTo(debit) != 0) {
+            return "Failed: consistency error: sum(credit) != sum(debit)";
+        }
 
-        // TODO: validate credit equals debit
-        // TODO: validate sum of balances is equals to 1000 * 10 (initial amount)
+        BigDecimal sumBalances = (BigDecimal) em.createQuery("select sum(b.amount) from Balance b").getSingleResult();
+        if (sumBalances.compareTo(new BigDecimal("10000")) != 0) {
+            return "Failed: consistency error: sum(balance.amount) != initial amount";
+        }
+        return "ok";
     }
 }
